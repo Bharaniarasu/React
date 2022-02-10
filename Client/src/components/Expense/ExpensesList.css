@@ -1,0 +1,12 @@
+.expenses-list {
+}
+.expenses-list__fallback {
+  font-size: large;
+  text-align: center;
+  font-weight: 700;
+  color: aliceblue;
+  background-color: tomato;
+  padding: 2rem;
+  margin: 3rem;
+  border-radius: 1rem;
+}
