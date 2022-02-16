@@ -5,6 +5,11 @@
   margin-bottom: 2rem;
   text-align: left;
 }
+.new-expense__controls input[type="text"] {
+  outline: none;
+  border: none;
+  border-bottom: 2px solid black;
+}
 
 .new-expense__control label {
   font-weight: bold;

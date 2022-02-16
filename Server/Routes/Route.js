@@ -9,15 +9,18 @@ Router.get("/", (req, res) => {
   //   Expense: req.params.id,
   //   isComplete: false,
   // });
+  // console.log(req.params.id);
   // Tasks.save((err, doc) => {
   //   if (err) console.log(err);
-  //   console.log(doc);
+  //   // console.log(doc);
   // });
 
   //display the database in browser
+
   Task.find((err, doc) => {
     if (err) console.log(err);
     res.json(doc);
+    console.log(doc);
   });
 });
 
@@ -32,7 +35,7 @@ Router.post("/", (req, res) => {
 
 Router.put("/:id", (req, res) => {
   Task.findOneAndUpdate(
-    { _id: req.params.id },
+    { id: req.params.id },
     req.body,
     { new: true },
     (err, doc) => {
@@ -40,6 +43,7 @@ Router.put("/:id", (req, res) => {
       res.json(doc);
     }
   );
+  // console.log(req.params.id);
 });
 
 Router.delete("/:id", (req, res) => {

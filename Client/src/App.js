@@ -1,41 +1,96 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
+import axios from "axios";
 import Expenses from "./components/Expense/Expenses";
 import NewExpense from "./components/NewExpense/NewExpense";
+// import AddTask from "./components/ToDo/AddTask";
+// import APIsample from "./components/ToDo/APIsample";
 // const date = new Date(2021, 3, 14);
-const dummyData = [
-  { id: "a1", date: new Date(2021, 3, 14), title: "Food", amount: 5400 },
-  { id: "a2", date: new Date(2021, 8, 10), title: "Grocerries", amount: 1250 },
-  { id: "a3", date: new Date(2019, 5, 11), title: "Vegetables", amount: 1250 },
-  { id: "a4", date: new Date(2022, 6, 9), title: "Fruits", amount: 700 },
-  { id: "a5", date: new Date(2020, 7, 1), title: "Books", amount: 740 },
-  { id: "a6", date: new Date(2019, 8, 5), title: "Rent", amount: 5500 },
-  { id: "a7", date: new Date(2021, 9, 26), title: "Travelling", amount: 3400 },
-  {
-    id: "a8",
-    date: new Date(2022, 2, 18),
-    title: "EMI",
-    amount: 3450,
-  },
-];
+// import axios from "axios";
+
 const App = () => {
-  const [data, setData] = useState(dummyData);
-  const [filteredData, setFilteredData] = useState(data);
+  const [serverExpenses, setServerExpenses] = useState([
+    {
+      _id: "1234",
+      Date: new Date(2021, 3, 14),
+      Expense: "OLD",
+      Amount: "111",
+      isComplete: false,
+      __v: 0,
+    },
+  ]);
+  // const [dummyDb, setDummyDb] = useState([]);
+
+  // console.log("==> " + dummyDb);
+  // axios
+  //   .get("http://localhost:8000/expenses")
+  //   .then((result) => {
+  //     console.log(result.data);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+  // const dummyData = [
+  //   { id: "a1", Date: new Date(2021, 3, 14), Expense: "Food", Amount: 5400 },
+  //   {
+  //     id: "a2",
+  //     Date: new Date(2021, 8, 10),
+  //     Expense: "Grocerries",
+  //     Amount: 1250,
+  //   },
+  //   {
+  //     id: "a3",
+  //     Date: new Date(2019, 5, 11),
+  //     Expense: "Vegetables",
+  //     Amount: 1250,
+  //   },
+  // ];
+
+  // const [data, setData] = useState(dummyData);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/expenses")
+      .then((res) => {
+        setServerExpenses(res.data);
+        // setDummyDb(res.data);
+        // console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  // console.log(serverExpenses);
+  // const [filteredData, setFilteredData] = useState(data);
+  // console.log(data);
 
   const saveExpenseDataHandler = (getExpenseData) => {
-    const expenseData = { ...getExpenseData };
-    console.log(expenseData);
-    setData((dummyData) => {
-      return [expenseData, ...dummyData];
-    });
-    // (or) setData([expenseData, ...dummyData]);
+    // const expenseData = { ...getExpenseData };
+    // console.log(expenseData);
+    // const dbData = [expenseData, ...dummyDb];
+    // setData((dummyData) => {
+    //   return [expenseData, ...dummyData];
+    // });
+    // setData(...serverExpenses);
   };
+  const addNewExp = (newExp) => {
+    setServerExpenses([...serverExpenses, newExp]);
+  };
+  // console.log(serverExpenses);
   // console.log(data);
+  // console.log(dummyDb);
+  // console.log(serverExpenses);
 
   return (
     <div className="App">
-      <NewExpense getSaveExpenseDataHandler={saveExpenseDataHandler} />
-      <Expenses data={data} />
+      <br />
+      <br />
+      {/* <AddTask addExp={addNewExp} /> */}
+      {/* <APIsample /> */}
+      {/* <h2>welcome</h2> */}
+      <NewExpense
+        getSaveExpenseDataHandler={saveExpenseDataHandler}
+        addExpense={addNewExp}
+      />
+      <Expenses dbExpense={serverExpenses} />
     </div>
   );
 };
